@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>房地合一與租賃財務試算 - 幸福特三</title>
+    <title>房地合一與租賃財稅助手 - 幸福特三</title>
     <link rel="manifest" href="manifest.json">
     <meta name="theme-color" content="#2c3e50">
     <link rel="apple-touch-icon" href="icon.png">
@@ -21,8 +21,7 @@
         .main-header small { color: #333333; font-size: 14px; margin-top: 5px; font-weight: bold; }
         .shiba-logo { width: 50px; height: 45px; background: #2c3e50; border-radius: 50% 50% 45% 45%; position: relative; margin-bottom: 10px; box-shadow: 0 4px 10px rgba(0,0,0,0.2); }
         .shiba-logo::before, .shiba-logo::after { content: ''; position: absolute; top: -12px; width: 18px; height: 25px; background: #2c3e50; border-radius: 8px 8px 0 0; }
-        .shiba-logo::before { left: 5px; transform: rotate(-15deg); }
-        .shiba-logo::after { right: 5px; transform: rotate(15deg); }
+        .shiba-logo::before { left: 5px; transform: rotate(-15deg); } .shiba-logo::after { right: 5px; transform: rotate(15deg); }
         .eyebrows::before, .eyebrows::after { content: ''; width: 10px; height: 10px; background: #f7d794; border-radius: 50%; }
         .tabs { display: flex; background: #2c3e50; border-radius: 12px 12px 0 0; overflow: hidden; }
         .tab-btn { flex: 1; padding: 15px 5px; text-align: center; cursor: pointer; font-weight: bold; transition: 0.3s; background: transparent; color: #ffffff; border: none; font-size: 14px; opacity: 0.7; }
@@ -34,6 +33,8 @@
         h3::before { content: ""; display: inline-block; width: 4px; height: 15px; background: var(--accent); margin-right: 8px; }
         .form-row { display: flex; flex-wrap: wrap; gap: 15px; margin-bottom: 12px; }
         .form-group { flex: 1; min-width: 240px; }
+        .form-check { display: flex; align-items: center; gap: 8px; margin: 10px 0; padding: 10px; background: var(--light-blue); border-radius: 8px; cursor: pointer; }
+        .form-check input { width: 20px; height: 20px; cursor: pointer; }
         label { display: block; margin-bottom: 6px; font-weight: bold; font-size: 14px; color: #2c3e50; }
         input, select { width: 100%; padding: 12px; border: 1px solid #999; border-radius: 8px; box-sizing: border-box; font-size: 16px; background: #fff; color: #000; font-weight: bold; }
         button.calc-btn { width: 100%; padding: 18px; background: var(--primary); color: white; border: none; border-radius: 10px; font-size: 18px; font-weight: bold; cursor: pointer; margin-top: 20px; }
@@ -53,7 +54,7 @@
 <div class="wrapper" id="captureArea">
     <div class="main-header">
         <div class="shiba-logo"><div class="eyebrows"></div></div>
-        <h1>房地合一與租賃財務試算</h1>
+        <h1>房地合一與租賃財稅助手</h1>
         <small>幸福特三</small>
     </div>
     <div class="tabs">
@@ -81,6 +82,10 @@
             <div class="form-group"><label>土地漲價總數額 (萬元)</label><input type="number" id="t1-landValue" value="0"></div>
             <div class="form-group"><label>持有年數 (年)</label><input type="number" id="t1-years" step="0.1"></div>
         </div>
+        <label class="form-check">
+            <input type="checkbox" id="t1-selfUse">
+            <span>符合自住優惠 (連續設籍6年, 400萬免稅額)</span>
+        </label>
         <button class="calc-btn" onclick="calcTaxMode()">精算稅額結果</button>
         <div id="res1" class="result-area">
             <div class="res-line"><span>總扣除成本與費用：</span><b id="res1-cost">0</b> 萬</div>
@@ -132,13 +137,13 @@
         <button class="calc-btn" onclick="calcRental()">開始租賃試算</button>
         <div id="res3" class="result-area"><div id="rentResultContent"></div></div>
     </div>
-    <button class="export-btn" id="shareBtn" onclick="exportAndShare()">📸 分享或儲存清晰精算報表</button>
+    <button class="export-btn" id="shareBtn" onclick="exportAndShare()">📸 分享或儲存計算結果</button>
     <div class="agent-banner">
         <img src="https://i.ibb.co/Tqv9WY08/icon.jpg" class="agent-img">
         <div class="agent-info">
             <b>林銘倫 | 房產財務規劃專家</b><br>
-            <small>在地深耕 · 幸福特三</small><br>
-            <a href="https://line.me/ti/p/S7g7hU1Biu" class="btn-contact">💬 加line了解更多</a>
+            <small>在地深耕 · 優質金仲獎人員</small><br>
+            <a href="https://line.me/ti/p/S7g7hU1Biu" class="btn-contact">💬 加Line了解更多</a>
         </div>
     </div>
 </div>
@@ -161,6 +166,7 @@
                     `;
                     clonedDoc.head.appendChild(style);
                     clonedDoc.querySelectorAll('input, select').forEach(input => {
+                        if(input.type === 'checkbox') return;
                         const val = input.value || input.placeholder || "0";
                         const textNode = clonedDoc.createElement('span');
                         textNode.innerText = val;
@@ -171,7 +177,7 @@
             });
             btn.style.display = 'flex';
             canvas.toBlob(async (blob) => {
-                const file = new File([blob], `精算報告.png`, { type: "image/png" });
+                const file = new File([blob], "精算報告.png", { type: "image/png" });
                 if (navigator.canShare && navigator.canShare({ files: [file] })) {
                     await navigator.share({ files: [file], title: '精算結果' });
                 } else {
@@ -199,13 +205,17 @@
         const sellAg = parseFloat(document.getElementById('t1-sellAgency').value) || 0;
         const land = parseFloat(document.getElementById('t1-landValue').value) || 0;
         const years = parseFloat(document.getElementById('t1-years').value) || 0;
+        const isSelfUse = document.getElementById('t1-selfUse').checked;
         const totalBuyCost = buy + buyAg + buyFee + reno;
-        let taxBase = Math.max(0, sell - totalBuyCost - sellAg - land);
-        const rate = getRate(years);
+        let gain = sell - totalBuyCost - sellAg - land;
+        let taxBase = Math.max(0, gain);
+        let rate = getRate(years);
+        if (isSelfUse) { taxBase = Math.max(0, taxBase - 400); rate = 0.10; }
+        const tax = taxBase * rate;
         document.getElementById('res1-cost').innerText = (totalBuyCost + sellAg).toFixed(1);
         document.getElementById('res1-base').innerText = taxBase.toFixed(1);
         document.getElementById('res1-rate').innerText = (rate * 100) + "%";
-        document.getElementById('res1-total').innerText = (taxBase * rate).toFixed(2);
+        document.getElementById('res1-total').innerText = tax.toFixed(2);
         document.getElementById('res1').style.display = 'block';
     }
     function calcPriceMode() {
