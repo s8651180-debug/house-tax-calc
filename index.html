@@ -17,39 +17,58 @@
     <style>
         :root { --primary: #2c3e50; --accent: #d35400; --bg: #f4f7f6; --green: #27ae60; --blue: #2980b9; --light-blue: #eef2f7; }
         #particles-js { position: fixed; width: 100%; height: 100%; top: 0; left: 0; z-index: -1; background-color: #f4f7f6; }
-        body { font-family: "Microsoft JhengHei", sans-serif; margin: 0; padding-bottom: 80px; color: #333; }
+        
+        /* 全局顯色強化：文字強制深色 */
+        body { font-family: "Microsoft JhengHei", sans-serif; margin: 0; padding-bottom: 80px; color: #000000; background-color: var(--bg); }
         .wrapper { max-width: 800px; margin: 10px auto; padding: 0 15px; position: relative; z-index: 1; background: transparent; }
-        .main-header { display: flex; flex-direction: column; align-items: center; justify-content: center; padding: 20px 0; margin-bottom: 10px; background: rgba(255, 255, 255, 1); border-radius: 15px; border: 1px solid rgba(255,255,255,0.3); box-shadow: 0 2px 10px rgba(0,0,0,0.05); }
+        
+        .main-header { display: flex; flex-direction: column; align-items: center; justify-content: center; padding: 20px 0; margin-bottom: 10px; background: #ffffff; border-radius: 15px; border: 1px solid #dcdde1; box-shadow: 0 2px 10px rgba(0,0,0,0.05); }
+        .main-header h1 { font-size: 22px; color: #000000; margin: 0; text-align: center; font-weight: 800; }
+        .main-header small { color: #000000; font-size: 14px; margin-top: 5px; font-weight: bold; }
+
         .shiba-logo { width: 50px; height: 45px; background: #2c3e50; border-radius: 50% 50% 45% 45%; position: relative; margin-bottom: 10px; box-shadow: 0 4px 10px rgba(0,0,0,0.2); }
         .shiba-logo::before, .shiba-logo::after { content: ''; position: absolute; top: -12px; width: 18px; height: 25px; background: #2c3e50; border-radius: 8px 8px 0 0; }
         .shiba-logo::before { left: 5px; transform: rotate(-15deg); }
         .shiba-logo::after { right: 5px; transform: rotate(15deg); }
         .eyebrows { position: absolute; top: 12px; width: 100%; display: flex; justify-content: space-around; padding: 0 8px; box-sizing: border-box; }
         .eyebrows::before, .eyebrows::after { content: ''; width: 10px; height: 10px; background: #f7d794; border-radius: 50%; }
-        .main-header h1 { font-size: 22px; color: var(--primary); margin: 0; text-align: center; }
-        .main-header small { color: #666; font-size: 14px; margin-top: 5px; }
+
         .tabs { display: flex; background: #2c3e50; border-radius: 12px 12px 0 0; overflow: hidden; }
-        .tab-btn { flex: 1; padding: 15px 5px; text-align: center; cursor: pointer; font-weight: bold; transition: 0.3s; background: transparent; color: #bbb; border: none; font-size: 14px; }
-        .tab-btn.active { background: #ffffff; color: var(--accent); border-top: 4px solid var(--accent); }
+        .tab-btn { flex: 1; padding: 15px 5px; text-align: center; cursor: pointer; font-weight: bold; transition: 0.3s; background: transparent; color: #ffffff; border: none; font-size: 14px; opacity: 0.8; }
+        .tab-btn.active { background: #ffffff; color: var(--accent); border-top: 4px solid var(--accent); opacity: 1; }
+        
         .card { background: #ffffff; padding: 25px; border-radius: 0 0 15px 15px; box-shadow: 0 10px 30px rgba(0,0,0,0.1); display: none; border: 1px solid #dcdde1; }
         .card.active { display: block; animation: fadeIn 0.4s ease; }
         @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
-        h2 { color: var(--primary); font-size: 20px; margin: 0 0 15px 0; border-bottom: 2px solid rgba(0,0,0,0.05); padding-bottom: 10px; }
-        h3 { font-size: 15px; color: var(--accent); margin: 20px 0 10px 0; display: flex; align-items: center; }
+        
+        /* 標籤文字加深 */
+        h2 { color: #000000; font-size: 20px; margin: 0 0 15px 0; border-bottom: 2px solid #eee; padding-bottom: 10px; font-weight: 800; }
+        h3 { font-size: 15px; color: #000000; margin: 20px 0 10px 0; display: flex; align-items: center; font-weight: 800; }
         h3::before { content: ""; display: inline-block; width: 4px; height: 15px; background: var(--accent); margin-right: 8px; }
+        
         .form-row { display: flex; flex-wrap: wrap; gap: 15px; margin-bottom: 12px; }
         .form-group { flex: 1; min-width: 240px; }
-        label { display: block; margin-bottom: 6px; font-weight: bold; font-size: 14px; }
-        input, select { width: 100%; padding: 12px; border: 1px solid #ccc; border-radius: 8px; box-sizing: border-box; font-size: 16px; background: #fff; transition: 0.3s; }
+        label { display: block; margin-bottom: 6px; font-weight: bold; font-size: 14px; color: #000000; }
+        
+        /* 輸入框加深加粗 */
+        input, select { width: 100%; padding: 12px; border: 1px solid #999; border-radius: 8px; box-sizing: border-box; font-size: 16px; background: #fff; transition: 0.3s; color: #000000; font-weight: bold; }
+        input:focus, select:focus { border-color: var(--accent); outline: none; box-shadow: 0 0 5px rgba(211, 84, 0, 0.2); }
+        
         button.calc-btn { width: 100%; padding: 18px; background: var(--primary); color: white; border: none; border-radius: 10px; font-size: 18px; font-weight: bold; cursor: pointer; margin-top: 20px; transition: 0.3s; box-shadow: 0 4px 15px rgba(0,0,0,0.2); }
+        
+        /* 分享按鈕樣式 */
         .export-btn { width: 100%; padding: 15px; background: #333; color: white; border: none; border-radius: 10px; font-size: 16px; font-weight: bold; cursor: pointer; margin-top: 15px; display: flex; align-items: center; justify-content: center; gap: 10px; transition: 0.3s; }
-        .result-area { display: none; margin-top: 25px; padding: 20px; border-radius: 10px; background: #f8f9fa; border: 1px solid #cbd5e0; }
-        .res-line { display: flex; justify-content: space-between; padding: 8px 0; border-bottom: 1px dashed #ccc; }
-        .res-highlight { font-size: 26px; color: #e74c3c; font-weight: bold; text-align: center; margin-top: 15px; }
+        
+        /* 結果區文字加重 */
+        .result-area { display: none; margin-top: 25px; padding: 20px; border-radius: 10px; background: #fdfdfd; border: 2px solid #cbd5e0; }
+        .res-line { display: flex; justify-content: space-between; padding: 10px 0; border-bottom: 1px dashed #666; color: #000; font-weight: bold; }
+        .res-highlight { font-size: 26px; color: #d63031; font-weight: 900; text-align: center; margin-top: 15px; }
+        
         .agent-banner { background: #ffffff; margin-top: 30px; padding: 20px; border-radius: 15px; display: flex; align-items: center; gap: 20px; border: 1px solid #dcdde1; box-shadow: 0 4px 10px rgba(0,0,0,0.05); }
-        .agent-img { width: 70px; height: 70px; border-radius: 50%; object-fit: cover; border: 2px solid white; box-shadow: 0 4px 10px rgba(0,0,0,0.1); }
-        .agent-info b { font-size: 17px; color: var(--primary); }
+        .agent-img { width: 70px; height: 70px; border-radius: 50%; object-fit: cover; border: 2px solid #eee; box-shadow: 0 4px 10px rgba(0,0,0,0.1); }
+        .agent-info b { font-size: 18px; color: #000000; font-weight: 800; }
         .btn-contact { display: inline-block; margin-top: 10px; background: #00b900; color: white; text-decoration: none; padding: 8px 15px; border-radius: 5px; font-size: 14px; transition: 0.3s; font-weight: bold; }
+        
         .tooltip { display: inline-block; position: relative; margin-left: 5px; cursor: help; background: #999; color: white; width: 18px; height: 18px; border-radius: 50%; text-align: center; font-size: 12px; line-height: 18px; }
         .tooltip:hover::after { content: "土地漲價總數額 = \A 當期公告土地現值 \A - 前次移轉現值 \A x 物價指數修正 \A (請直接查閱土增稅單最準確)"; position: absolute; left: 25px; top: 0; background: #333; color: white; padding: 10px; border-radius: 5px; width: 220px; white-space: pre-wrap; z-index: 10; font-weight: normal; font-size: 13px; text-align: left; }
     </style>
@@ -91,9 +110,9 @@
             </div>
             <button class="calc-btn" onclick="calcTaxMode()">精算稅額結果</button>
             <div id="res1" class="result-area">
-                <div class="res-line"><span>總扣除成本與費用：</span><span id="res1-cost">0</span> 萬</div>
-                <div class="res-line"><span>課稅所得 (稅基)：</span><span id="res1-base">0</span> 萬</div>
-                <div class="res-line"><span>適用稅率：</span><span id="res1-rate">0%</span></div>
+                <div class="res-line"><span>總扣除成本與費用：</span><b id="res1-cost">0</b> 萬</div>
+                <div class="res-line"><span>課稅所得 (稅基)：</span><b id="res1-base">0</b> 萬</div>
+                <div class="res-line"><span>適用稅率：</span><b id="res1-rate">0%</b></div>
                 <div class="res-highlight">預估應納稅額：<span id="res1-total">0</span> 萬</div>
             </div>
         </div>
@@ -118,10 +137,10 @@
             <button class="calc-btn" onclick="calcPriceMode()">倒推建議成交價</button>
             <div id="res2" class="result-area">
                 <div class="res-highlight" style="color:var(--green)">建議成交總價：<span id="res2-sell">0</span> 萬</div>
-                <div class="res-line"><span>預估房地合一稅：</span><span id="res2-tax">0</span> 萬</div>
-                <div class="res-line"><span>預估仲介費：</span><span id="res2-agency">0</span> 萬</div>
-                <div class="res-line"><span>原始購入及雜費：</span><span id="res2-fixed">0</span> 萬</div>
-                <div class="res-highlight" style="font-size: 20px;">實拿獲利：約 <span id="res2-final">0</span> 萬</div>
+                <div class="res-line"><span>預估房地合一稅：</span><b id="res2-tax">0</b> 萬</div>
+                <div class="res-line"><span>預估仲介費：</span><b id="res2-agency">0</b> 萬</div>
+                <div class="res-line"><span>原始購入及雜費：</span><b id="res2-fixed">0</b> 萬</div>
+                <div class="res-highlight" style="font-size: 20px; color:#000;">實拿獲利核對：約 <span id="res2-final">0</span> 萬</div>
             </div>
         </div>
 
@@ -148,7 +167,7 @@
             </div>
         </div>
 
-        <button class="export-btn" id="shareBtn" onclick="exportAndShare()">📸 分享或儲存計算結果</button>
+        <button class="export-btn" id="shareBtn" onclick="exportAndShare()">📸 分享或儲存清晰精算報表</button>
 
         <div class="agent-banner">
             <img src="https://i.ibb.co/Tqv9WY08/icon.jpg" class="agent-img" alt="專家頭像">
@@ -161,50 +180,65 @@
     </div>
 
     <script>
+        /* 強力顯色轉圖分享邏輯 */
         async function exportAndShare() {
             const area = document.getElementById('captureArea');
             const btn = document.getElementById('shareBtn');
             btn.style.display = 'none';
+
             try {
                 const canvas = await html2canvas(area, {
                     useCORS: true,
                     scale: 3, 
-                    backgroundColor: "#f4f7f6",
+                    backgroundColor: "#ffffff",
                     onclone: (clonedDoc) => {
-                        const inputs = clonedDoc.querySelectorAll('input, select');
-                        inputs.forEach(input => {
+                        // 1. 狸貓換太子：將 input 換成實體文字 span，解決數字太淺問題
+                        clonedDoc.querySelectorAll('input, select').forEach(input => {
                             const val = input.value || input.placeholder || "0";
                             const textNode = clonedDoc.createElement('span');
                             textNode.innerText = val;
-                            textNode.style.cssText = "font-weight:bold; color:#000000; font-size:16px; padding-left:5px;";
+                            textNode.style.cssText = "font-weight:900; color:#000000; font-size:17px; padding-left:5px;";
                             input.parentNode.replaceChild(textNode, input);
                         });
+
+                        // 2. 注入強力黑化 CSS (只作用於圖檔分身)
                         const style = clonedDoc.createElement('style');
                         style.innerHTML = `
                             * { color: #000000 !important; opacity: 1 !important; font-weight: 800 !important; }
                             .result-area { background: #ffffff !important; border: 2px solid #000 !important; display: block !important; }
-                            .res-highlight, .highlight { color: #8b0000 !important; font-size: 24px !important; }
+                            .res-highlight, .highlight { color: #d63031 !important; -webkit-text-stroke: 0.5px #d63031; }
                             .main-header, .agent-banner, .card { background: #ffffff !important; border: 1px solid #000 !important; }
                             .shiba-logo { background: #000000 !important; }
+                            .res-line { border-bottom: 1px solid #000 !important; }
                         `;
                         clonedDoc.head.appendChild(style);
                     }
                 });
+
                 btn.style.display = 'flex';
+
                 canvas.toBlob(async (blob) => {
-                    const file = new File([blob], "精算報告.png", { type: "image/png" });
+                    const file = new File([blob], `精算報告_${new Date().getTime()}.png`, { type: "image/png" });
                     if (navigator.canShare && navigator.canShare({ files: [file] })) {
-                        try { await navigator.share({ files: [file], title: '房產財務試算報告' }); } catch (err) {}
+                        try {
+                            await navigator.share({ files: [file], title: '房產財務試算報告', text: '林銘倫專家為您精算之結果' });
+                        } catch (err) {}
                     } else {
                         const link = document.createElement('a');
                         link.download = '精算報告.png';
                         link.href = canvas.toDataURL();
                         link.click();
+                        alert("已下載清晰版圖檔至手機。");
                     }
                 }, 'image/png');
-            } catch (err) { btn.style.display = 'flex'; }
+
+            } catch (err) {
+                alert("產生圖片失敗");
+                btn.style.display = 'flex';
+            }
         }
 
+        /* 原有計算邏輯 */
         function switchTab(evt, tabId) {
             document.querySelectorAll('.card').forEach(c => c.classList.remove('active'));
             document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
@@ -228,74 +262,65 @@
             const totalBuyCost = buy + buyAg + buyFee + reno;
             let taxBase = Math.max(0, sell - totalBuyCost - sellAg - land);
             const rate = getRate(years);
-            const tax = taxBase * rate;
-            document.getElementById('res1-cost').innerText = totalBuyCost.toFixed(1);
+            document.getElementById('res1-cost').innerText = (totalBuyCost + sellAg).toFixed(1);
             document.getElementById('res1-base').innerText = taxBase.toFixed(1);
             document.getElementById('res1-rate').innerText = (rate * 100) + "%";
-            document.getElementById('res1-total').innerText = tax.toFixed(2);
+            document.getElementById('res1-total').innerText = (taxBase * rate).toFixed(2);
             document.getElementById('res1').style.display = 'block';
         }
 
         function calcPriceMode() {
             const buy = parseFloat(document.getElementById('t2-buyPrice').value) || 0;
-            const buyOther = parseFloat(document.getElementById('t2-buyOther').value) || 0;
-            const reno = parseFloat(document.getElementById('t2-renovation').value) || 0;
-            const targetProfit = parseFloat(document.getElementById('t2-profit').value) || 0;
+            const profit = parseFloat(document.getElementById('t2-profit').value) || 0;
             const years = parseFloat(document.getElementById('t2-years').value) || 0;
-            const agRate = (parseFloat(document.getElementById('t2-agencyRate').value) || 0) / 100;
-            const land = parseFloat(document.getElementById('t2-landValue').value) || 0;
+            const fixedCost = buy + (parseFloat(document.getElementById('t2-buyOther').value)||0) + (parseFloat(document.getElementById('t2-renovation').value)||0);
             const rate = getRate(years);
-            const fixedCost = buy + buyOther + reno;
-            let sell = buy + targetProfit + (targetProfit * 0.4); 
-            for (let i = 0; i < 100; i++) {
-                let agencyFee = sell * agRate;
-                let finalSellFee = Math.max(agencyFee, Math.min(sell * 0.03, 30));
-                let taxBase = sell - fixedCost - finalSellFee - land;
+            let sell = buy + profit + (profit * 0.4); 
+            for (let i = 0; i < 50; i++) {
+                let agency = sell * 0.04;
+                let finalSellFee = Math.max(agency, Math.min(sell * 0.03, 30));
+                let taxBase = sell - fixedCost - finalSellFee - (parseFloat(document.getElementById('t2-landValue').value)||0);
                 let tax = taxBase > 0 ? taxBase * rate : 0;
                 let currentProfit = sell - fixedCost - finalSellFee - tax;
-                let diff = targetProfit - currentProfit;
+                let diff = profit - currentProfit;
                 if (Math.abs(diff) < 0.01) break;
                 sell += diff; 
             }
             document.getElementById('res2-sell').innerText = Math.round(sell).toLocaleString();
-            document.getElementById('res2-tax').innerText = ((Math.round(sell) - fixedCost - (Math.round(sell)*agRate))*rate).toFixed(1);
-            document.getElementById('res2-agency').innerText = (Math.round(sell) * agRate).toFixed(1);
+            document.getElementById('res2-tax').innerText = ((Math.round(sell)-fixedCost-(Math.round(sell)*0.04))*rate).toFixed(1);
+            document.getElementById('res2-agency').innerText = (Math.round(sell)*0.04).toFixed(1);
             document.getElementById('res2-fixed').innerText = fixedCost.toFixed(1);
-            document.getElementById('res2-final').innerText = targetProfit.toLocaleString();
+            document.getElementById('res2-final').innerText = profit.toLocaleString();
             document.getElementById('res2').style.display = 'block';
         }
 
         function updateRentLabel() {
-            const mode = document.getElementById('rentMode').value;
-            document.getElementById('rentLabel').innerText = mode === "1" ? "月租金總額 (含稅)" : "房東每月實拿金額 (淨額)";
+            document.getElementById('rentLabel').innerText = document.getElementById('rentMode').value === "1" ? "月租金總額 (含稅)" : "房東每月實拿金額 (淨額)";
         }
 
         function calcRental() {
             const val = parseFloat(document.getElementById('rentInput').value) || 0;
-            const mode = document.getElementById('rentMode').value;
-            const tenant = document.getElementById('tenantType').value;
+            const isCo = document.getElementById('tenantType').value === 'company';
             const landlord = document.getElementById('landlordType').value;
-            let grossRent, netCash, withholding = 0, nhi = 0;
-            if (mode === "1") {
-                grossRent = val;
-                if (tenant === 'company' && grossRent >= 20000) { withholding = Math.round(grossRent * 0.10); nhi = Math.round(grossRent * 0.0211); }
-                netCash = grossRent - withholding - nhi;
+            let gross, net, wh = 0, nhi = 0;
+            if (document.getElementById('rentMode').value === "1") {
+                gross = val; if (isCo && gross >= 20000) { wh = Math.round(gross * 0.10); nhi = Math.round(gross * 0.0211); }
+                net = gross - wh - nhi;
             } else {
-                if (tenant === 'company' && val >= 17578) {
-                    grossRent = Math.round(val / 0.8789); withholding = Math.round(grossRent * 0.10); nhi = Math.round(grossRent * 0.0211); netCash = val;
-                } else { grossRent = val; netCash = val; }
+                if (isCo && val >= 17578) { gross = Math.round(val / 0.8789); wh = Math.round(gross * 0.10); nhi = Math.round(gross * 0.0211); net = val; }
+                else { gross = val; net = val; }
             }
-            let taxableIncome = Math.max(0, (grossRent - (landlord === 'general' ? 0 : 15000))) * (1 - (landlord === 'social' ? 0.60 : 0.43)) * 12;
+            let taxableIncome = Math.max(0, (gross - (landlord === 'general' ? 0 : 15000))) * (1 - (landlord === 'social' ? 0.60 : 0.43)) * 12;
             document.getElementById('rentResultContent').innerHTML = `
-                <div class="res-line"><span>合約應簽金額 (總額)：</span><b>${grossRent.toLocaleString()} 元</b></div>
-                <div class="res-line"><span>預扣 10% / 健保 2.11%：</span><span>${(withholding+nhi).toLocaleString()} 元</span></div>
-                <div class="res-highlight">房東每月實拿：${netCash.toLocaleString()} 元</div>
+                <div class="res-line"><span>合約應簽金額 (總額)：</span><b>${gross.toLocaleString()} 元</b></div>
+                <div class="res-line"><span>稅費(10%+2.11%)：</span><b>${(wh+nhi).toLocaleString()} 元</b></div>
+                <div class="res-highlight">房東每月實拿：${net.toLocaleString()} 元</div>
                 <div class="res-line" style="border-top:1px solid #ddd; margin-top:10px; padding-top:10px;"><span>年度租賃所得額：</span><b>${Math.round(taxableIncome).toLocaleString()} 元</b></div>
             `;
             document.getElementById('res3').style.display = 'block';
         }
     </script>
     <script src="https://cdn.jsdelivr.net/particles.js/2.0.0/particles.min.js"></script>
-    <script>try { particlesJS("particles-js", { "particles": { "number": { "value": 40 }, "opacity": { "value": 0.15 }, "move": { "speed": 1 } } }); } catch (e) {}</script>
+    <script>try { particlesJS("particles-js", { "particles": { "number": { "value": 40 }, "opacity": { "value": 0.1 }, "move": { "speed": 1 } } }); } catch (e) {}</script>
 </body>
 </html>
